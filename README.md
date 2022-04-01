@@ -109,6 +109,7 @@ services:
       - WHITELIST=iplist #optional
       - PEERPORT=peerport #optional
       - HOST_WHITELIST=dnsnane list #optional
+      - DOWNLOAD_DIR_OVERRIDE=/media/downloads #optional
     volumes:
       - <path to data>:/config
       - <path to downloads>:/downloads
@@ -134,6 +135,7 @@ docker run -d \
   -e WHITELIST=iplist `#optional` \
   -e PEERPORT=peerport `#optional` \
   -e HOST_WHITELIST=dnsnane list `#optional` \
+  -e DOWNLOAD_DIR_OVERRIDE=/media/downloads `#optional` \
   -p 9091:9091 \
   -p 51413:51413 \
   -p 51413:51413/udp \
@@ -162,6 +164,7 @@ Container images are configured using parameters passed at runtime (such as thos
 | `-e WHITELIST=iplist` | Specify an optional list of comma separated ip whitelist. Fill rpc-whitelist setting. |
 | `-e PEERPORT=peerport` | Specify an optional port for torrent TCP/UDP connections. Fill peer-port setting. |
 | `-e HOST_WHITELIST=dnsnane list` | Specify an optional list of comma separated dns name whitelist. Fill rpc-host-whitelist setting. |
+| `-e DOWNLOAD_DIR_OVERRIDE` | Downloads location inside of container |
 | `-v /config` | Where transmission should store config files and logs. |
 | `-v /downloads` | Local path for downloads. |
 | `-v /watch` | Watch folder for torrent files. |

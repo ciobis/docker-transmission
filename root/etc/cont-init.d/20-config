@@ -1,12 +1,20 @@
 #!/usr/bin/with-contenv bash
 
-# make folders
-mkdir -p \
-	/downloads/{complete,incomplete} /watch
+DOWNLOAD_DIR="/downloads"
 
 # copy config
 [[ ! -f /config/settings.json ]] && cp \
 	/defaults/settings.json /config/settings.json
+
+if [ ! -z "$DOWNLOAD_DIR_OVERRIDE" ]; then
+	DOWNLOAD_DIR=$DOWNLOAD_DIR_OVERRIDE
+	sed -i "/download-dir/c\    \"download-dir\": \"$DOWNLOAD_DIR/complete\"," /config/settings.json
+	sed -i "/\"incomplete-dir\"/c\    \"incomplete-dir\": \"$DOWNLOAD_DIR/incomplete\"," /config/settings.json
+fi
+
+# make folders
+mkdir -p \
+	$DOWNLOAD_DIR/{complete,incomplete} /watch
 
 if [ ! -z "$USER" ] && [ ! -z "$PASS" ]; then
 	sed -i '/rpc-authentication-required/c\    "rpc-authentication-required": true,' /config/settings.json
@@ -43,7 +51,7 @@ fi
 # permissions
 chown abc:abc \
 	/config/settings.json \
-	/downloads \
-	/downloads/complete \
-	/downloads/incomplete \
+	$DOWNLOAD_DIR \
+	$DOWNLOAD_DIR/complete \
+	$DOWNLOAD_DIR/incomplete \
 	/watch
